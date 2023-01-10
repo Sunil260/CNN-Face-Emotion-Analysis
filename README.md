@@ -21,3 +21,6 @@ model.add(layers.Flatten())
 model.add(layers.Dense(128, activation='relu'))
 model.add(layers.Dense(num_classes))
 
+Current itteration:
+![image](https://user-images.githubusercontent.com/44715832/211434545-1feba68d-6976-4dd9-a2c9-20502e4f2e97.png)
+
