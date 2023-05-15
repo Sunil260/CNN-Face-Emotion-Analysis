@@ -2,25 +2,41 @@
 The goal of this project is to use a CNN model to analyze live video input of multiple facial expressions and create a generealization of mood among people.
 Once a consensus is made a playlist with metadata matching the expression/mood will play. 
 
-CNN Architecture:
-model = models.Sequential()
+Newer implementation with a deeper network, data augmentation and learning rate schedule. 
+Current itteration:
 
 #First layer to normalize the RGB chanels 
 model.add(layers.Rescaling(1./255))
 
-#3 layer stack for convlutional block
-model.add(layers.Conv2D(32, 3, activation='relu'))
+model.add(data_augmentation)
+
+#4 layer stack for convlutional block
+
+model.add(layers.Conv2D(64, 3, padding='same',activation='relu'))
 model.add(layers.MaxPooling2D())
-model.add(layers.Conv2D(32, 3, activation='relu'))
+
+model.add(layers.Conv2D(128, 3, padding='same',activation='relu'))
+model.add(layers.BatchNormalization())
+model.add(layers.Conv2D(128, 3, padding='same',activation='relu'))
 model.add(layers.MaxPooling2D())
-model.add(layers.Conv2D(32, 3, activation='relu'))
+model.add(layers.Dropout(0.20))
+
+model.add(layers.Conv2D(256, 3, padding='same',activation='relu'))
+model.add(layers.BatchNormalization())
 model.add(layers.MaxPooling2D())
+model.add(layers.Dropout(0.20))
+
+model.add(layers.Conv2D(512, 3, padding='same',activation='relu'))
+model.add(layers.BatchNormalization())
+model.add(layers.MaxPooling2D())
+model.add(layers.Dropout(0.20))
 
 #Flatten for dense layer
 model.add(layers.Flatten())
+model.add(layers.BatchNormalization())
+model.add(layers.Dropout(.20, input_shape=(3,)))
 model.add(layers.Dense(128, activation='relu'))
-model.add(layers.Dense(num_classes))
+model.add(layers.Dropout(.20))
+model.add(layers.Dense(num_classes,activation = 'softmax'))
 
-Current itteration:
-![image](https://user-images.githubusercontent.com/44715832/211434545-1feba68d-6976-4dd9-a2c9-20502e4f2e97.png)
-
+<img width="724" alt="Screen Shot 2023-05-15 at 10 38 08 AM" src="https://github.com/Sunil260/CNN-Face-Emotion-Analysis/assets/44715832/d7898139-95a6-4146-8b6f-cd2cc5be1981">
